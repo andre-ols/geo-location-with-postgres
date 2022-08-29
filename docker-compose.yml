@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  psql:
+    container_name: psql
+    image: postgis/postgis
+    volumes:
+      - ./db/data:/pgdata
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - PGDATA=/pgdata
+    ports:
+      - "${DB_PORT}:5432"
+    restart: always
+    
+  dev:
+    container_name: geolocation-postgres_dev
+    build:
+      context: .
+      target: development
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - './src/:/usr/geolocation-postgres/src/'
+    command: bash -c "pnpm start:watch"
+    ports:
+      - '3000:3000'
+    depends_on:
+      - psql
+    links:
+      - psql
+    environment:
+      - NODE_ENV=development

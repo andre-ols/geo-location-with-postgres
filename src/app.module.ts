@@ -1,10 +1,16 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module, ValidationPipe } from '@nestjs/common';
+import { APP_PIPE } from '@nestjs/core';
+import { setupDatabase } from './config/database';
+import { setupEnvironment } from './config/environment';
+import { UserModule } from './modules/User/user.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [setupDatabase(), setupEnvironment(), UserModule],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({ whitelist: true, stopAtFirstError: true }),
+    },
+  ],
 })
 export class AppModule {}
