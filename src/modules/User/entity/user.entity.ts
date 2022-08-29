@@ -1,3 +1,4 @@
+import { Point } from 'geojson';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -10,5 +11,5 @@ export class User {
 
   // column location type geography point
   @Column({ type: 'geography', spatialFeatureType: 'POINT' })
-  location: string;
+  location: Point;
 }
