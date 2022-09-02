@@ -4,7 +4,7 @@ import { FindAllProxiesUserDto } from '../dto/find-all-proxies-user.dto';
 import { FindAllProxiesUserService } from '../service/find-all-proxies-user.service';
 
 @ApiTags('user')
-@Controller('distances')
+@Controller('proxies-user')
 export class FindAllProxiesUserController {
   constructor(private readonly findAllProxiesUserService: FindAllProxiesUserService) {}
 

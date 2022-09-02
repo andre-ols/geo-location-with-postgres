@@ -13,7 +13,7 @@ export class FindAllUserByLocationService {
       `
         SELECT name, ST_Distance(location, ST_SetSRID(ST_MakePoint($1, $2), 4326)) AS distance
         FROM "user"
-        WHERE ST_DWithin(location, ST_SetSRID(ST_MakePoint($1, $2), 4326), $3)
+        WHERE ST_Distance(location, ST_SetSRID(ST_MakePoint($1, $2), 4326))  <= $3
         ORDER BY distance
       `,
       [dto.longitude, dto.latitude, dto.radius],
